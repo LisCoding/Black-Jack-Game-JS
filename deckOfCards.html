@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cards</title>
+  </head>
+  <body>
+    <h1>Cards!</h1>
+  </body>
+  <script type="text/javascript">
+// Create a Deck class. A deck should have the following functionality:
+// The Deck should contain the 52 standard cards
+// The Deck should be able to shuffle
+// The Deck should be able to reset
+// The Deck should be able to deal a random card
+// Deal should return the card that was dealt and remove it from the deck
+class Deck {
+  constructor(){
+    this.cards = []
+    this.create_cards()
+  }
+  create_cards(){
+    let suites = ["spades", "heart", "clubs", "diamonds"]
+    for(let i = 0; i < suites.length; i++){
+      for(let j= 1; j<14; j++){
+        let suite = []
+        suite.push(suites[i])
+        suite.push(j)
+        this.cards.push(suite)
+      }
+    }
+  }
+
+  //shufle cards: randomly shuffle the cards
+  shuffle(){
+    console.log(this.cards.length);
+    for (let i = 0; i < 50; i++){
+      let index_1 = Math.floor(Math.random()* 52)
+      let index_2 = Math.floor(Math.random()* 52)
+      let temp = this.cards[index_1]
+      this.cards[index_1] = this.cards[index_2]
+      this.cards[index_2] = temp
+    }
+    return this
+  }
+
+  //reset deck: populates the deck again with 52 cards
+  reset_Deck(){
+    this.cards = []
+    this.create_cards()
+  }
+  // The Deck should be able to deal a random card
+  // Deal should return the card that was dealt and remove it from the deck
+  deal_card(){
+    let index = Math.floor(Math.random()* 52);
+    let card = this.cards[index];
+    this.cards.splice( this.cards.indexOf(card), 1 );
+    return card
+  }
+
+}
+
+//running tests
+let my_deck = new Deck()
+console.log(my_deck);
+my_deck.shuffle()
+console.log(my_deck.deal_card());
+console.log(my_deck.deal_card());
+console.log(my_deck);
+my_deck.reset_Deck()
+console.log(my_deck)
+//*********Player Class**********
+// The Player should have a name
+// The Player should have a hand
+// The Player should be able to take a card (use the deck.deal method)
+// The Player should be able to discard a card
+class Player {
+  constructor(name){
+    this.name = name
+    this.hand = []
+  }
+  // The Player should be able to take a card (use the deck.deal method):
+  //we pass the deck object to allow the user to take a card
+  take_card(deck){
+    let card = deck.deal_card()
+    this.hand.push(card)
+    return this
+  }
+
+  // The Player should be able to discard a card:
+  discard_card(){
+    let card_discarded = this.hand.pop()
+    return card_discarded
+  }
+
+}
+
+//Testing player class
+let player_1 = new Player("liseth")
+console.log(player_1);
+player_1.take_card(my_deck)
+player_1.take_card(my_deck)
+player_1.take_card(my_deck)
+console.log(player_1.hand);
+console.log(my_deck);
+player_1.discard_card()
+console.log(player_1.hand);
+
+  </script>
+</html>
